@@ -235,6 +235,7 @@ typedef struct {
     { 0x591A, MFX_HW_KBL, MFX_GT2 }, // SERV GT2
     { 0x591B, MFX_HW_KBL, MFX_GT2 }, // HALO GT2
     { 0x591D, MFX_HW_KBL, MFX_GT2 }, // WRK GT2
+    { 0x591C, MFX_HW_KBL, MFX_GT2 }, // ULX GT2
     { 0x591E, MFX_HW_KBL, MFX_GT2 }, // ULX GT2
     { 0x5921, MFX_HW_KBL, MFX_GT2 }, // ULT GT2F
     { 0x5923, MFX_HW_KBL, MFX_GT3 }, // ULT GT3
