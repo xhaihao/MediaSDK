@@ -524,18 +524,18 @@ mfxStatus VAAPIEncoder::Destroy()
     m_feedbackCache.clear();
     DestroyBuffers();
 
-    if( m_vaContextEncode )
+    if( m_vaContextEncode != VA_INVALID_ID )
     {
         VAStatus vaSts = vaDestroyContext( m_vaDisplay, m_vaContextEncode );
         std::ignore = MFX_STS_TRACE(vaSts);
-        m_vaContextEncode = 0;
+        m_vaContextEncode = VA_INVALID_ID;
     }
 
-    if( m_vaConfig )
+    if( m_vaConfig != VA_INVALID_ID )
     {
         VAStatus vaSts = vaDestroyConfig( m_vaDisplay, m_vaConfig );
         std::ignore = MFX_STS_TRACE(vaSts);
-        m_vaConfig = 0;
+        m_vaConfig = VA_INVALID_ID;
     }
     return MFX_ERR_NONE;
 }
