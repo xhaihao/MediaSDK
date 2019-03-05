@@ -403,8 +403,8 @@ Status VC1VideoDecoder::StartCodesProcessing(uint8_t*   pBStream,
 
             if (mfx::align2_value(2*(context.m_seqLayerHeader.MAX_CODED_WIDTH+1)) > mfx::align2_value(2*(m_pInitContext.m_seqLayerHeader.MAX_CODED_WIDTH+1)))
                 return UMC_ERR_INVALID_PARAMS;
-            // if (context.m_seqLayerHeader.INTERLACE != m_pInitContext.m_seqLayerHeader.INTERLACE )
-            // return UMC_ERR_INVALID_PARAMS;
+            if (context.m_seqLayerHeader.INTERLACE != m_pInitContext.m_seqLayerHeader.INTERLACE )
+                return UMC_ERR_INVALID_PARAMS;
             if (mfx::align2_value(2*(context.m_seqLayerHeader.MAX_CODED_HEIGHT+1),alignment) > mfx::align2_value(2*(m_pInitContext.m_seqLayerHeader.MAX_CODED_HEIGHT+1),alignment))
                 return UMC_ERR_INVALID_PARAMS;
             // start codes are applicable for advanced profile only
