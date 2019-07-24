@@ -1000,7 +1000,8 @@ mfxStatus CDecodingPipeline::AllocFrames()
 #if (MFX_VERSION >= 1027)
         || m_mfxVideoParams.mfx.FrameInfo.FourCC == MFX_FOURCC_Y210
 #endif
-        ) && m_mfxVideoParams.mfx.CodecId==MFX_CODEC_VP9)
+        ) && ((m_mfxVideoParams.mfx.CodecId==MFX_CODEC_VP9) ||
+              m_mfxVideoParams.mfx.CodecId == MFX_CODEC_HEVC))
     {
         m_mfxVideoParams.mfx.FrameInfo.Shift = 1;
     }

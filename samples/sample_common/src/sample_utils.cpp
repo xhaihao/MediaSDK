@@ -937,7 +937,7 @@ mfxStatus CSmplYUVWriter::WriteNextFrame(mfxFrameSurface1 *pSurface)
         for (i = 0; i < pInfo.CropH; i++)
         {
             mfxU16* shortPtr = (mfxU16*)(pData.Y + (pInfo.CropY * pData.Pitch + pInfo.CropX) + i * pData.Pitch);
-            if (pInfo.Shift)
+            if (0 && pInfo.Shift)
             {
                 // Convert MS-P*1* to P*1* and write
                 // Bits will be shifted to the lower position
@@ -1010,7 +1010,7 @@ mfxStatus CSmplYUVWriter::WriteNextFrame(mfxFrameSurface1 *pSurface)
         for (i = 0; i < height; i++)
         {
             mfxU16* shortPtr = (mfxU16*)(pData.UV + (pInfo.CropY * pData.Pitch + pInfo.CropX*2) + i * pData.Pitch);
-            if (pInfo.Shift)
+            if (0 && pInfo.Shift)
             {
                 // Convert MS-P*1* to P*1* and write
                 // Bits will be shifted to the lower position
