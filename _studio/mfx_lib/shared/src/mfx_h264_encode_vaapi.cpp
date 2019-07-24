@@ -179,7 +179,7 @@ mfxStatus SetRateControl(
     VAEncMiscParameterBuffer *misc_param;
     VAEncMiscParameterRateControl *rate_param;
     mfxExtCodingOption3 const & extOpt3 = GetExtBufferRef(par);
-    static bool bminus3 = false;
+
     mfxStatus mfxSts = CheckAndDestroyVAbuffer(vaDisplay, rateParamBuf_id);
     MFX_CHECK_STS(mfxSts);
 
@@ -200,8 +200,7 @@ mfxStatus SetRateControl(
     misc_param->type = VAEncMiscParameterTypeRateControl;
     rate_param = (VAEncMiscParameterRateControl *)misc_param->data;
 
-    bminus3 = !bminus3;
-    rate_param->bits_per_second = (!bminus3 ? par.calcParam.maxKbps : (par.calcParam.maxKbps - 3)) << 10;
+    rate_param->bits_per_second = GetMaxBitrateValue(par.calcParam.maxKbps) << (6 + SCALE_FROM_DRIVER);
     rate_param->window_size     = par.mfx.Convergence * 100;
 
     if (par.mfx.RateControlMethod == MFX_RATECONTROL_AVBR)
