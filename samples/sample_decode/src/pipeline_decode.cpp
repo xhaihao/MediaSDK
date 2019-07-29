@@ -818,7 +818,7 @@ mfxStatus CDecodingPipeline::InitMfxParams(sInputParams *pParams)
     }
 
     m_mfxVideoParams.AsyncDepth = pParams->nAsyncDepth;
-
+    m_mfxVideoParams.mfx.EnableReallocRequest = MFX_CODINGOPTION_ON;
     return MFX_ERR_NONE;
 }
 
