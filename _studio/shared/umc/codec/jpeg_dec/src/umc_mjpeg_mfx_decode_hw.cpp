@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 Intel Corporation
+// Copyright (c) 2017-2019 Intel Corporation
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -398,7 +398,8 @@ Status MJPEGVideoDecoderMFX_HW::GetFrameHW(MediaDataEx* in)
         {
             uint32_t nextNotRSTMarkerPos = i+1;
 
-            while((pAuxData->values[nextNotRSTMarkerPos] & 0xFF) >= JM_RST0 &&
+            while((nextNotRSTMarkerPos < pAuxData->count) &&
+                  (pAuxData->values[nextNotRSTMarkerPos] & 0xFF) >= JM_RST0 &&
                   (pAuxData->values[nextNotRSTMarkerPos] & 0xFF) <= JM_RST7)
             {
                   nextNotRSTMarkerPos++;
