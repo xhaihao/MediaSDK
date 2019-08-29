@@ -398,7 +398,8 @@ Status MJPEGVideoDecoderMFX_HW::GetFrameHW(MediaDataEx* in)
         {
             uint32_t nextNotRSTMarkerPos = i+1;
 
-            while((pAuxData->values[nextNotRSTMarkerPos] & 0xFF) >= JM_RST0 &&
+            while((nextNotRSTMarkerPos < pAuxData->count) &&
+                  (pAuxData->values[nextNotRSTMarkerPos] & 0xFF) >= JM_RST0 &&
                   (pAuxData->values[nextNotRSTMarkerPos] & 0xFF) <= JM_RST7)
             {
                   nextNotRSTMarkerPos++;
