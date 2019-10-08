@@ -354,8 +354,7 @@ mfxStatus MFXVideoENCODEMJPEG_HW::Query(VideoCORE * core, mfxVideoParam *in, mfx
         if ((fourCC == 0 && chromaFormat == 0) ||
             (fourCC == MFX_FOURCC_NV12 && (chromaFormat == MFX_CHROMAFORMAT_YUV420 || chromaFormat == MFX_CHROMAFORMAT_YUV400)) ||
             (fourCC == MFX_FOURCC_YUY2 && chromaFormat == MFX_CHROMAFORMAT_YUV422H) ||
-            (fourCC == MFX_FOURCC_RGB4 && chromaFormat == MFX_CHROMAFORMAT_YUV444) ||
-            (fourCC == MFX_FOURCC_AYUV && chromaFormat == MFX_CHROMAFORMAT_YUV444))
+            (fourCC == MFX_FOURCC_RGB4 && chromaFormat == MFX_CHROMAFORMAT_YUV444))
         {
             out->mfx.FrameInfo.FourCC = in->mfx.FrameInfo.FourCC;
             out->mfx.FrameInfo.ChromaFormat = in->mfx.FrameInfo.ChromaFormat;
@@ -1073,8 +1072,7 @@ mfxStatus MFXVideoENCODEMJPEG_HW::TaskRoutineSubmitFrame(
     mfxFrameSurface1 * nativeSurf = task.surface;
 
     // WA for RGB swapping issue
-    if (enc.m_vParam.mfx.FrameInfo.FourCC == MFX_FOURCC_RGB4 ||
-        enc.m_vParam.mfx.FrameInfo.FourCC == MFX_FOURCC_AYUV)
+    if (enc.m_vParam.mfx.FrameInfo.FourCC == MFX_FOURCC_RGB4)
     {
         mfxFrameData dstSurf = {};
         bool bExternalFrameLocked = false;
