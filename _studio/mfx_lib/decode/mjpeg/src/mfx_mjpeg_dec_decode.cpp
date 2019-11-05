@@ -1757,6 +1757,8 @@ void VideoDECODEMJPEGBase_HW::AdjustFourCC(mfxFrameInfo *requestFrameInfo, const
         case MFX_CHROMAFORMAT_YUV422V:
             break;
         case MFX_CHROMAFORMAT_YUV444:
+            break;
+
             if (info->Rotation == MFX_ROTATION_0 &&
                 ((!usePostProc && requestFrameInfo->FourCC == MFX_FOURCC_RGB4)
                  // for YUV444 jpeg, decoded stream contains 444P,
