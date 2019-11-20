@@ -394,12 +394,12 @@ mfxStatus CSmplYUVReader::LoadNextFrame(mfxFrameSurface1* pSurface)
             {
             case MFX_FOURCC_NV12:
 
-                mfxU8 buf[2048]; // maximum supported chroma width for nv12
+                mfxU8 buf[4096]; // maximum supported chroma width for nv12
                 mfxU32 j, dstOffset[2];
                 w /= 2;
                 h /= 2;
                 ptr = pData.UV + pInfo.CropX + (pInfo.CropY / 2) * pitch;
-                if (w > 2048)
+                if (w > 4096)
                 {
                     return MFX_ERR_UNSUPPORTED;
                 }
