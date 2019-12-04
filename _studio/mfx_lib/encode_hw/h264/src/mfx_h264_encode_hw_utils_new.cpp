@@ -2232,11 +2232,11 @@ void MfxHwH264Encode::ConfigureTask(
             {
                 task.m_roi[task.m_numRoi] = {pRoi->ROI[i].Left,  pRoi->ROI[i].Top,
                                              pRoi->ROI[i].Right, pRoi->ROI[i].Bottom,
-                                             (mfxI16)((pRoi->ROIMode == MFX_ROI_MODE_PRIORITY ? (-1) : 1) * pRoi->ROI[i].DeltaQP) };
+                                             pRoi->ROIMode == MFX_ROI_MODE_PRIORITY ? pRoi->ROI[i].Priority : pRoi->ROI[i].DeltaQP };
                 task.m_numRoi ++;
             }
         }
-        task.m_roiMode = MFX_ROI_MODE_QP_DELTA;
+        task.m_roiMode = pRoi->ROIMode;
     }
 
     mfxExtDirtyRect const * pDirtyRect = extDirtyRectRuntime ? extDirtyRectRuntime : extDirtyRect;
