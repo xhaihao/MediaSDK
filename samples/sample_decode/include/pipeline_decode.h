@@ -207,6 +207,30 @@ public:
 
         }
     }
+    
+    inline void PrintFrameCorruption(mfxU16 CorruptionFlag)
+    {
+        if (CorruptionFlag)
+        {
+            if (CorruptionFlag & MFX_CORRUPTION_MINOR)
+                msdk_printf(MSDK_STRING("[Corruption] Minor corruption of macro block!\n"));
+
+            if (CorruptionFlag & MFX_CORRUPTION_MAJOR)
+                msdk_printf(MSDK_STRING("[Corruption] Major corruption of frame!\n"));
+
+            if (CorruptionFlag & MFX_CORRUPTION_ABSENT_TOP_FIELD)
+                msdk_printf(MSDK_STRING("[Corruption] Absent top field!\n"));
+
+            if (CorruptionFlag & MFX_CORRUPTION_ABSENT_BOTTOM_FIELD)
+                msdk_printf(MSDK_STRING("[Corruption] Absent bottom field!\n"));
+
+            if (CorruptionFlag & MFX_CORRUPTION_REFERENCE_FRAME)
+                msdk_printf(MSDK_STRING("[Corruption] Corrupted reference frame!\n"));
+
+            if (CorruptionFlag & MFX_CORRUPTION_REFERENCE_LIST)
+                msdk_printf(MSDK_STRING("[Corruption] Incorrect reference list!\n"));
+        }
+    }
 #endif
 
 protected: // functions
@@ -286,6 +310,7 @@ protected: // variables
     mfxU32                  m_fourcc; // color format of vpp out, i420 by default
     bool                    m_bPrintLatency;
     bool                    m_bOutI420;
+    bool                    m_bReportError;
 
     mfxU16                  m_vppOutWidth;
     mfxU16                  m_vppOutHeight;

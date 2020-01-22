@@ -97,6 +97,8 @@ CDecodingPipeline::CDecodingPipeline()
     m_bPrintLatency = false;
     m_fourcc = 0;
 
+    m_bReportError = false;
+
     m_nTimeout = 0;
     m_nMaxFps = 0;
 
@@ -671,6 +673,7 @@ mfxStatus CDecodingPipeline::InitMfxParams(sInputParams *pParams)
     mfxU32 &numViews = pParams->numViews;
 
 #if (MFX_VERSION >= 1025)
+    m_bReportError = pParams->bErrorReport;
     if (pParams->bErrorReport)
     {
         auto decErrorReport = m_mfxBS.AddExtBuffer<mfxExtDecodeErrorReport>();
@@ -1685,6 +1688,9 @@ mfxStatus CDecodingPipeline::SyncOutputSurface(mfxU32 wait)
     }
     if (MFX_ERR_NONE == sts) {
         // we got completely decoded frame - pushing it to the delivering thread...
+	if (m_bReportError) {
+            PrintFrameCorruption(m_pCurrentOutputSurface->surface->frame.Data.Corrupted);
+	}
         ++m_synced_count;
         if (m_bPrintLatency) {
             m_vLatency.push_back(m_timer_overall.Sync() - m_pCurrentOutputSurface->surface->submit);
