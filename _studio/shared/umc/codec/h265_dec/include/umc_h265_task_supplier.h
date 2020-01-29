@@ -310,7 +310,11 @@ public:
 
 
     // Chose appropriate processing action for specified NAL unit
+#if (MFX_VERSION >= 1025)
+    UMC::Status ProcessNalUnit(UMC::MediaDataEx *nalUnit, mfxExtDecodeErrorReport *pDecodeErrorReport);
+#else
     UMC::Status ProcessNalUnit(UMC::MediaDataEx *nalUnit);
+#endif
 
     void SetMemoryAllocator(UMC::MemoryAllocator *pMemoryAllocator)
     {

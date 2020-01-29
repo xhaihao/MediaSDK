@@ -462,7 +462,7 @@ public:
     // Decode a memory buffer looking for header NAL units in it
     virtual UMC::Status DecodeHeader(UMC::MediaData* params, mfxBitstream *bs, mfxVideoParam *out);
     // Find headers nal units and parse them
-    virtual UMC::Status ProcessNalUnit(UMC::MediaData * data);
+    virtual UMC::Status ProcessNalUnit(UMC::MediaData * data, mfxBitstream *bs);
     // Returns whether necessary headers are found
     virtual bool IsEnough() const
     { return m_isSPSFound && m_isPPSFound; }
@@ -499,7 +499,7 @@ UMC::Status HeadersAnalyzer::DecodeHeader(UMC::MediaData * data, mfxBitstream *b
             bs->DataLength = (mfxU32)data->GetDataSize();
         }
 
-        umcRes = ProcessNalUnit(data);
+        umcRes = ProcessNalUnit(data, bs);
 
         if (umcRes == UMC::UMC_ERR_UNSUPPORTED)
             umcRes = UMC::UMC_OK;
@@ -552,8 +552,12 @@ UMC::Status HeadersAnalyzer::DecodeHeader(UMC::MediaData * data, mfxBitstream *b
 }
 
 // Find headers nal units and parse them
-UMC::Status HeadersAnalyzer::ProcessNalUnit(UMC::MediaData * data)
+UMC::Status HeadersAnalyzer::ProcessNalUnit(UMC::MediaData * data, mfxBitstream *bs)
 {
+#if (MFX_VERSION >= 1025)
+	mfxExtDecodeErrorReport * pDecodeErrorReport = (mfxExtDecodeErrorReport*)GetExtendedBuffer(bs->ExtParam, bs->NumExtParam, MFX_EXTBUFF_DECODE_ERROR_REPORT);
+#endif
+
     try
     {
         int32_t startCode = m_supplier->GetNalUnitSplitter()->CheckNalUnitType(data);
@@ -607,7 +611,11 @@ UMC::Status HeadersAnalyzer::ProcessNalUnit(UMC::MediaData * data)
         {
             try
             {
+#if (MFX_VERSION >= 1025)
+                UMC::Status umcRes = m_supplier->ProcessNalUnit(nalUnit, pDecodeErrorReport);
+#else
                 UMC::Status umcRes = m_supplier->ProcessNalUnit(nalUnit);
+#endif
                 if (umcRes < UMC::UMC_OK)
                 {
                     return UMC::UMC_OK;
