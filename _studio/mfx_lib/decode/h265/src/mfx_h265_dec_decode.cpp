@@ -357,7 +357,7 @@ mfxStatus VideoDECODEH265::Init(mfxVideoParam *par)
     #endif
                 )
 
-                request.Info.Shift = 1;
+                request.Info.Shift = 0;
         }
 
         mfxSts = m_core->AllocFrames(&request_internal, &m_response, true);
