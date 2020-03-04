@@ -109,6 +109,7 @@ mfxStatus MfxHwMJpegEncode::CheckJpegParam(VideoCORE *core, mfxVideoParam & par,
             BytesPerPx = 1.5;
             break;
         case MFX_FOURCC_YUY2:
+        case MFX_FOURCC_UYVY:
             BytesPerPx = 2;
             break;
         case MFX_FOURCC_RGB4:
@@ -306,7 +307,8 @@ mfxStatus ExecuteBuffers::Init(mfxVideoParam const *par, mfxEncodeCtrl const * c
 
     if (fourCC == MFX_FOURCC_NV12 && chromaFormat == MFX_CHROMAFORMAT_YUV420)
         m_pps.num_components = 3;
-    else if (fourCC == MFX_FOURCC_YUY2 && chromaFormat == MFX_CHROMAFORMAT_YUV422H)
+    else if ((fourCC == MFX_FOURCC_YUY2 && chromaFormat == MFX_CHROMAFORMAT_YUV422H) ||
+             (fourCC == MFX_FOURCC_UYVY && chromaFormat == MFX_CHROMAFORMAT_YUV422H))
         m_pps.num_components = 3;
     else if (fourCC == MFX_FOURCC_NV12 && chromaFormat == MFX_CHROMAFORMAT_YUV400)
         m_pps.num_components = 1;
