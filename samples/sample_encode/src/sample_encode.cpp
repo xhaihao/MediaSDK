@@ -108,6 +108,7 @@ void PrintHelp(msdk_char *strAppName, const msdk_char *strErrorMessage, ...)
     msdk_printf(MSDK_STRING("   [-robust:soft]           - Recovery from GPU hang by inserting an IDR\n"));
     msdk_printf(MSDK_STRING("   [-vbr]                   - variable bitrate control\n"));
     msdk_printf(MSDK_STRING("   [-cbr]                   - constant bitrate control\n"));
+    msdk_printf(MSDK_STRING("   [-vcm]                   - VCM bitrate control\n"));
     msdk_printf(MSDK_STRING("   [-qvbr quality]          - variable bitrate control algorithm with constant quality. Quality in range [1,51]. 1 is the best quality.\n"));
     msdk_printf(MSDK_STRING("   [-icq quality]           - Intelligent Constant Quality (ICQ) bitrate control method. In range [1,51]. 1 is the best quality.\n"));
     msdk_printf(MSDK_STRING("                              If [-la] or [-lad] options are enabled simultaneously, then LA_ICQ bitrate control method will be used.\n"));
@@ -569,6 +570,10 @@ mfxStatus ParseInputString(msdk_char* strInput[], mfxU8 nArgNum, sInputParams* p
         else if (0 == msdk_strcmp(strInput[i], MSDK_STRING("-cbr")))
         {
             pParams->nRateControlMethod = MFX_RATECONTROL_CBR;
+        }
+        else if (0 == msdk_strcmp(strInput[i], MSDK_STRING("-vcm")))
+        {
+            pParams->nRateControlMethod = MFX_RATECONTROL_VCM;
         }
         else if (0 == msdk_strcmp(strInput[i], MSDK_STRING("-single_texture_d3d11")))
         {

@@ -190,7 +190,8 @@ public:
             par.base.GetNumTemporalLayers(par) > 1
             || par.caps.SliceIPOnly
             || GopPicSize < 3
-            || par.mvp.mfx.NumRefFrame == 1;
+            || par.mvp.mfx.NumRefFrame == 1
+            || par.mvp.mfx.RateControlMethod == MFX_RATECONTROL_VCM;
         bool bCQP =
             par.mvp.mfx.RateControlMethod == MFX_RATECONTROL_CQP
             || Legacy::IsSWBRC(par.mvp, ExtBuffer::Get(par.mvp));
