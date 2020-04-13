@@ -174,20 +174,24 @@ namespace UMC_HEVC_DECODER
             pic_fields.loop_filter_across_tiles_enabled_flag                 = pps->loop_filter_across_tiles_enabled_flag;
 
             pic_fields.pcm_loop_filter_disabled_flag                         = sps->pcm_loop_filter_disabled_flag;
-            pic_fields.NoPicReorderingFlag                                   = sps->sps_max_num_reorder_pics[sh->nuh_temporal_id] == 0 ? 1 : 0;
+            pic_fields.NoPicReorderingFlag                                   = 0;
             pic_fields.NoBiPredFlag                                          = 0;
 
             pp->sps_max_dec_pic_buffering_minus1                             = (uint8_t)(sps->sps_max_dec_pic_buffering[sh->nuh_temporal_id] - 1);
             pp->bit_depth_luma_minus8                                        = (uint8_t)(sps->bit_depth_luma - 8);
             pp->bit_depth_chroma_minus8                                      = (uint8_t)(sps->bit_depth_chroma - 8);
-            pp->pcm_sample_bit_depth_luma_minus1                             = (uint8_t)(sps->pcm_sample_bit_depth_luma - 1);
-            pp->pcm_sample_bit_depth_chroma_minus1                           = (uint8_t)(sps->pcm_sample_bit_depth_chroma - 1);
+            if (sps->pcm_enabled_flag) {
+                pp->pcm_sample_bit_depth_luma_minus1                             = (uint8_t)(sps->pcm_sample_bit_depth_luma - 1);
+                pp->pcm_sample_bit_depth_chroma_minus1                           = (uint8_t)(sps->pcm_sample_bit_depth_chroma - 1);
+            }
             pp->log2_min_luma_coding_block_size_minus3                       = (uint8_t)(sps->log2_min_luma_coding_block_size- 3);
             pp->log2_diff_max_min_luma_coding_block_size                     = (uint8_t)(sps->log2_max_luma_coding_block_size - sps->log2_min_luma_coding_block_size);
             pp->log2_min_transform_block_size_minus2                         = (uint8_t)(sps->log2_min_transform_block_size - 2);
             pp->log2_diff_max_min_transform_block_size                       = (uint8_t)(sps->log2_max_transform_block_size - sps->log2_min_transform_block_size);
-            pp->log2_min_pcm_luma_coding_block_size_minus3                   = (uint8_t)(sps->log2_min_pcm_luma_coding_block_size - 3);
-            pp->log2_diff_max_min_pcm_luma_coding_block_size                 = (uint8_t)(sps->log2_max_pcm_luma_coding_block_size - sps->log2_min_pcm_luma_coding_block_size);
+            if (sps->pcm_enabled_flag) {
+                pp->log2_min_pcm_luma_coding_block_size_minus3                   = (uint8_t)(sps->log2_min_pcm_luma_coding_block_size - 3);
+                pp->log2_diff_max_min_pcm_luma_coding_block_size                 = (uint8_t)(sps->log2_max_pcm_luma_coding_block_size - sps->log2_min_pcm_luma_coding_block_size);
+            }
             pp->max_transform_hierarchy_depth_intra                          = (uint8_t)sps->max_transform_hierarchy_depth_intra;
             pp->max_transform_hierarchy_depth_inter                          = (uint8_t)sps->max_transform_hierarchy_depth_inter;
             pp->init_qp_minus26                                              = pps->init_qp - 26;
