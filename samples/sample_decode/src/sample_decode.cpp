@@ -661,6 +661,10 @@ mfxStatus ParseInputString(msdk_char* strInput[], mfxU8 nArgNum, sInputParams* p
             pParams->bIgnoreLevelConstrain = true;
         }
 #endif
+        else if (0 == msdk_strcmp(strInput[i], MSDK_STRING("-disable_film_grain")))
+        {
+            pParams->bDisableFilmGrain = true;
+        }
         else // 1-character options
         {
             switch (strInput[i][1])
