@@ -569,7 +569,8 @@ mfxStatus mfxDefaultAllocatorVAAPI::SetFrameData(const VAImage &va_image, mfxU32
         break;
 
     case VA_FOURCC_AYUV:
-        if (mfx_fourcc != va_image.format.fourcc) return MFX_ERR_LOCK_MEMORY;
+    case VA_FOURCC_XYUV:
+        if (mfx_fourcc != MFX_FOURCC_AYUV) return MFX_ERR_LOCK_MEMORY;
 
         {
             ptr->V = p_buffer + va_image.offsets[0];
